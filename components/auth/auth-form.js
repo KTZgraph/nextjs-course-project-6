@@ -4,6 +4,7 @@ import classes from './auth-form.module.css';
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
 
+  // przełączanie zaloguj / zarejestruj
   function switchAuthModeHandler() {
     setIsLogin((prevState) => !prevState);
   }
