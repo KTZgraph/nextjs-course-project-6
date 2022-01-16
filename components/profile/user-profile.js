@@ -1,5 +1,6 @@
 // chroniony komponent przed niezalowanymi użytkownikami
-import { getSession } from "next-auth/client";
+// import { getSession } from "next-auth/client"; //tej funckje mozna uzywać po stronie klient ajak i serwera
+// teraz renderuje się tylko dla zalogowanych użytkowników
 import { useEffect, useState } from "react";
 
 import ProfileForm from "./profile-form";
@@ -14,8 +15,9 @@ function UserProfile() {
   //jeśli nie potrzebujemy sesji do niczego wiecej niż nawigacji to można usunac
   // const [loadedSession, setLoadedSession] = useState(); // na początku undefined
 
+  /* NIE trzeba teraz po stronie kleinta bo sesja przekazana jako props z /profile.js z metody getServerSideProps
   // żeby dostać sesję gdy ten komponent jest wyrenderowany - rozwiazanie zamiast useSession hooka z "next-auth/client";
-  useEffect(() => {
+  useEffect(() => { // NIGDY NIE ROBIĆ async - już wtedy zrobić wewnątrz fucnkję i ją wtey async żeby wewnątrz czekać await na promisy
     // Promise, session moze być null jak jej nie mamy
     getSession().then((session) => {
       // interesuje nas tylko fakt czy sesja nie jest nullem
@@ -30,6 +32,7 @@ function UserProfile() {
       // setLoadedSession(session); //niepotrzeba bo tylko nas interesuje czy sesja istnieje do nawigacji
     });
   }, []);
+  */
 
   // Redirect away if NOT auth
   // UWAGA loading nie mzienia swojego stanu na true dopóki user nie jest zalogowany
@@ -37,10 +40,10 @@ function UserProfile() {
   // if we don't have a session because we are log out to [session] sie nie zmieni i [loading] tez sie nigdy nie zmieni
   // useSession nie używamy bo nei działa tak jak powinna - wieczny Loading gdy nie ma sesji
 
-  if (isLoading) {
-    // spinner jak ładują  się dane
-    return <p className={classes.profile}>Loading ...</p>;
-  }
+  // if (isLoading) {
+  //   // spinner jak ładują  się dane
+  //   return <p className={classes.profile}>Loading ...</p>;
+  // }
 
   return (
     <section className={classes.profile}>
