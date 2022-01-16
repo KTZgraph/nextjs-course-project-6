@@ -53,15 +53,18 @@ function AuthForm() {
       //zwraca promisa zawsze nawet jak mamy błąd na backendzie w kodzie autentykacji, obiekt będzie mieć informacje o błedzie
       // jak nie ma błedu to result jest dalej obiektem tylko bez infomacji o błedzie, więc nigdy nie zwróci błedu tylko content obiektu będzie inny
       const result = await signIn("credentials", {
-        redirect: false,
+        redirect: false, //teraz z redirect: false, zwróci Promisa
+        //argumenty do obiektu async authorize(credentails) {...} z [...nextauth].js
         email: enteredEmail,
         password: enteredPassword,
       });
 
       if(!result.error){
-        //set some auth state np. żeby zmienić opcje tego co widac (user zalogowany nie powinien widzieć login)
+        //set some auth state np. żeby zmienić opcje tego co widac (user zalogowany nie powinien widzieć login) można z Reactem albo Reduxem
         // ale za każdym razem kiedy robimy reload strony to stan też sioe czyści/przepada bo startujemy cąłkiem nowa SPA stronę kiedy reload
-        //cały stan przechowywany w pamięci od ostatniej wizyty przepadnie - tego nie chcemy
+        //cały stan przechowywany w pamięci od ostatniej wizyty przepadnie - tego nie chcemy, własnie dlatego we have this token concpet
+        // we can store that token in more permament storage than just our memory and we also use that token to send requests to potentially 
+        //prtoected apis alike change-password
 
       }
 
