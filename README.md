@@ -42,3 +42,6 @@ session cookie "next-auth/client"
 
 next-auth.csrf-token
 chrome - > nadzie developerskie -> Application -> Cookies -> next-auth.csrf-token
+
+session to tak naprawdę JWT token który jest automatycznie zarządzany prze next-auth, który jest przchowywany przez next auth w anszej przeglądarce - this cookie który przechowuje ten token, któy jest tam stworozny i next-auth determinuej czy mamy aktywną sesję (user jest zalogowany) przez sprawdzenie tego cookie i tokena będącego wewnątrz tokena - to się dzieje w profile.js w const session =- awai getSession({req: context.req}); 
+albo w main-navigation.js const [session, loading] = useSesstion() useSession hook
