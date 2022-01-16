@@ -3,6 +3,8 @@ import { signIn } from "next-auth/client";
 // https://next-auth.js.org/getting-started/client
 // import { signIn } from "next-auth/react";
 
+import { useRouter } from "next/router"; //do przekierowania poprawnie zalgoowane usera
+
 import classes from "./auth-form.module.css";
 
 // funckja rejestracji - można do innego pliku wrzucić
@@ -24,7 +26,9 @@ async function createUser(email, password) {
 function AuthForm() {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+
   const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
 
   // przełączanie zaloguj / zarejestruj
   function switchAuthModeHandler() {
@@ -59,15 +63,18 @@ function AuthForm() {
         password: enteredPassword,
       });
 
-      if(!result.error){
+      if (!result.error) {
         //set some auth state np. żeby zmienić opcje tego co widac (user zalogowany nie powinien widzieć login) można z Reactem albo Reduxem
         // ale za każdym razem kiedy robimy reload strony to stan też sioe czyści/przepada bo startujemy cąłkiem nowa SPA stronę kiedy reload
         //cały stan przechowywany w pamięci od ostatniej wizyty przepadnie - tego nie chcemy, własnie dlatego we have this token concpet
-        // we can store that token in more permament storage than just our memory and we also use that token to send requests to potentially 
+        // we can store that token in more permament storage than just our memory and we also use that token to send requests to potentially
         //prtoected apis alike change-password
 
+        // NIE chcemy pokazywac login jak user już jest zalogowany - tylko chcemy go przekirować
+        // w sPA window.redirect.href  dobre tylko gdyu nie ma stanu który można stracić - dlatego  używamy useRouter();
+        //można dodac spinner
+        router.replace('/profile');
       }
-
 
       console.log(result);
     } else {
